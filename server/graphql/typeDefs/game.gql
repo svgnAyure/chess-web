@@ -6,5 +6,5 @@ type Game {
 
 type Query {
   createGame: Game!
-  getGame(id: Int!): Game!
+  getGame(id: Int!): Game
 }
