@@ -1,0 +1,10 @@
+type Game {
+  id: Int!
+  fen: String!
+  toMove: String!
+}
+
+type Query {
+  createGame: Game!
+  getGame(id: Int!): Game!
+}

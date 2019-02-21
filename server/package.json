@@ -1,0 +1,13 @@
+{
+  "name": "chess-app-server",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Kristian Stang",
+  "license": "MIT",
+  "dependencies": {
+    "chess-engine": "https://github.com/svgnAyure/chess-engine",
+    "graphql": "^14.0.2",
+    "graphql-yoga": "^1.16.9",
+    "merge-graphql-schemas": "^1.5.8"
+  }
+}
