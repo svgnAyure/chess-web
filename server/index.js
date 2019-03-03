@@ -21,7 +21,6 @@ const server = new GraphQLServer({
 })
 
 server.start({
-  port: 3000,
   endpoint: '/graphql',
   subscriptions: '/subscriptions'
 })

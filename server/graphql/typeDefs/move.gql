@@ -1,0 +1,7 @@
+type Move {
+  from: String!
+  to: String!
+  capture: Boolean!
+  special: String
+  notation: String
+}

@@ -1,10 +1,18 @@
 type Game {
-  id: Int!
+  id: ID!
   fen: String!
   toMove: String!
+  myTurn: Boolean!
+  inCheck: String
+  legalMoves: [Move!]!
+  lastMove: [String!]
 }
 
 type Query {
   createGame: Game!
-  getGame(id: Int!): Game
+  getGame(id: ID!): Game
+}
+
+type Mutation {
+  makeMove(id: ID!, from: String!, to: String!, promoteTo: String): Game
 }
