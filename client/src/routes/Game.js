@@ -17,7 +17,7 @@ class Game extends React.Component {
       return <Redirect to="/" />
     }
 
-    const { id, fen, legalMoves, toMove, lastMove, inCheck } = getGame
+    const { id, fen, gameStatus, playerInfo, legalMoves, keySquares } = getGame
     const { moves, captures } = formatMoves(legalMoves)
 
     return (
@@ -25,11 +25,11 @@ class Game extends React.Component {
         <ChessBoard
           id={id}
           fen={fen}
-          toMove={toMove}
-          lastMove={lastMove}
-          inCheck={inCheck}
+          gameStatus={gameStatus}
+          playerInfo={playerInfo}
           moves={moves}
           captures={captures}
+          keySquares={keySquares}
         />
         <Link to="/">Home</Link>
       </>
@@ -42,13 +42,23 @@ const getGameQuery = gql`
     getGame(id: $id) {
       id
       fen
-      inCheck
-      toMove
-      lastMove
+      gameStatus {
+        isFinished
+        statusText
+      }
       legalMoves {
         from
         to
         capture
+        special
+      }
+      playerInfo {
+        myTurn
+        isWhite
+      }
+      keySquares {
+        checkSquare
+        lastMove
       }
     }
   }

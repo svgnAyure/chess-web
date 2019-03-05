@@ -1,10 +1,25 @@
 type Game {
   id: ID!
   fen: String!
-  toMove: String!
-  myTurn: Boolean!
-  inCheck: String
   legalMoves: [Move!]!
+  moveHistory: [String!]!
+  gameStatus: GameStatus!
+  playerInfo: PlayerInfo!
+  keySquares: KeySquares!
+}
+
+type GameStatus {
+  isFinished: Boolean!
+  statusText: String!
+}
+
+type PlayerInfo {
+  myTurn: Boolean!
+  isWhite: Boolean!
+}
+
+type KeySquares {
+  checkSquare: String
   lastMove: [String!]
 }
 
@@ -14,5 +29,5 @@ type Query {
 }
 
 type Mutation {
-  makeMove(id: ID!, from: String!, to: String!, promoteTo: String): Game
+  makeMove(id: ID!, from: String!, to: String!, promoteTo: String): Boolean!
 }
