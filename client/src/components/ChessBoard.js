@@ -63,8 +63,8 @@ class ChessBoard extends React.Component {
       active: this.state.activeSquare === id,
       canMoveTo: this.state.canMoveTo.includes(id),
       canCapture: this.state.canCapture.includes(id),
-      lastMove: this.props.lastMove.includes(id),
-      inCheck: this.props.inCheck
+      lastMove: this.props.keySquares.lastMove.includes(id),
+      inCheck: this.props.keySquares.checkSquare === id
     })
 
     return (
@@ -75,8 +75,9 @@ class ChessBoard extends React.Component {
   }
 
   renderSquares() {
-    const rows = this.props.fen.split(' ')[0].split('/')
-    const squares = rows.flatMap((r, y) => {
+    const { isWhite } = this.props.playerInfo
+    const chars = this.props.fen.split(' ')[0].split('/')
+    const rows = chars.flatMap((r, y) => {
       let x = 0
       return r.split('').flatMap(c => {
         if (isNaN(c)) {
@@ -87,7 +88,7 @@ class ChessBoard extends React.Component {
         })
       })
     })
-    return squares
+    return isWhite ? [...rows] : [...rows.reverse()]
   }
 
   render() {
@@ -97,9 +98,7 @@ class ChessBoard extends React.Component {
 
 const makeMoveMutation = gql`
   mutation($id: ID!, $from: String!, $to: String!, $promoteTo: String) {
-    makeMove(id: $id, from: $from, to: $to, promoteTo: $promoteTo) {
-      fen
-    }
+    makeMove(id: $id, from: $from, to: $to, promoteTo: $promoteTo)
   }
 `
 

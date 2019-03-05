@@ -25,8 +25,6 @@ const query = gql`
   {
     createGame {
       id
-      fen
-      toMove
     }
   }
 `

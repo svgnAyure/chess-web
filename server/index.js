@@ -3,7 +3,7 @@ const { GraphQLServer } = require('graphql-yoga')
 const { typeDefs, resolvers } = require('./graphql/schema')
 const { middlewares } = require('./graphql/middleware')
 
-const ChessGame = require('chess-engine')
+const ChessGame = require('../../chess-engine')
 const games = {}
 
 const context = ({ request, response }) => ({
