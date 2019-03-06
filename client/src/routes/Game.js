@@ -1,10 +1,10 @@
-import React from 'react'
-import { Link, Redirect } from 'react-router-dom'
-import { graphql } from 'react-apollo'
 import gql from 'graphql-tag'
+import React from 'react'
+import { graphql } from 'react-apollo'
+import { Link, Redirect } from 'react-router-dom'
 
-import { formatMoves } from '../utils/functions'
 import ChessBoard from '../components/ChessBoard'
+import { formatMoves } from '../utils/functions'
 
 class Game extends React.Component {
   render() {
@@ -18,7 +18,7 @@ class Game extends React.Component {
     }
 
     const { id, fen, gameStatus, playerInfo, legalMoves, keySquares } = getGame
-    const { moves, captures } = formatMoves(legalMoves)
+    const { moves, captures, promotions } = formatMoves(legalMoves)
 
     return (
       <>
@@ -29,6 +29,7 @@ class Game extends React.Component {
           playerInfo={playerInfo}
           moves={moves}
           captures={captures}
+          promotions={promotions}
           keySquares={keySquares}
         />
         <Link to="/">Home</Link>

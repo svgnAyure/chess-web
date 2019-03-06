@@ -1,15 +1,29 @@
 export const formatMoves = legalMoves =>
   legalMoves.reduce(
-    (a, m) => {
-      const type = m.capture ? 'captures' : 'moves'
-      return {
-        ...a,
-        [type]: { ...a[type], [m.from]: a[type][m.from] ? [...a[type][m.from], m.to] : [m.to] }
-      }
-    },
+    (a, m) => ({
+      moves:
+        !m.capture || m.special === 'enPassant'
+          ? a.moves[m.from]
+            ? { ...a.moves, [m.from]: [...a.moves[m.from], m.to] }
+            : { ...a.moves, [m.from]: [m.to] }
+          : a.moves,
+      captures:
+        m.capture && m.special !== 'enPassant'
+          ? a.captures[m.from]
+            ? { ...a.captures, [m.from]: [...a.captures[m.from], m.to] }
+            : { ...a.captures, [m.from]: [m.to] }
+          : a.captures,
+      promotions:
+        m.special === 'promotion'
+          ? a.promotions[m.from]
+            ? { ...a.promotions, [m.from]: [...a.promotions[m.from], m.to] }
+            : { ...a.promotions, [m.from]: [m.to] }
+          : a.promotions
+    }),
     {
       moves: {},
-      captures: {}
+      captures: {},
+      promotions: {}
     }
   )
 
