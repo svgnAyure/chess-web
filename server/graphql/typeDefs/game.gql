@@ -24,10 +24,9 @@ type KeySquares {
 }
 
 type Query {
-  createGame: Game!
   getGame(id: ID!): Game
 }
 
 type Mutation {
-  makeMove(id: ID!, from: String!, to: String!, promoteTo: String): Boolean!
+  createGame: String!
 }

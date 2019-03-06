@@ -1,36 +1,36 @@
+import gql from 'graphql-tag'
 import React from 'react'
 import { graphql } from 'react-apollo'
-import gql from 'graphql-tag'
 import { Link } from 'react-router-dom'
 
 class Home extends React.Component {
+  state = {
+    id: null
+  }
+
+  async componentDidMount() {
+    const { data } = await this.props.mutate()
+    this.setState({ id: data.createGame })
+  }
+
   render() {
-    const {
-      data: { loading, createGame }
-    } = this.props
-    if (loading) {
+    if (!this.state.id) {
       return null
     }
 
     return (
       <>
-        <h1>{`ID: ${createGame.id}`}</h1>
-        <Link to={`/${createGame.id}`}>Go to game</Link>
+        <h1>{`ID: ${this.state.id}`}</h1>
+        <Link to={`/${this.state.id}`}>Go to game</Link>
       </>
     )
   }
 }
 
-const query = gql`
-  {
-    createGame {
-      id
-    }
+const createGameMutation = gql`
+  mutation {
+    createGame
   }
 `
 
-const options = {
-  fetchPolicy: 'network-only'
-}
-
-export default graphql(query, { options })(Home)
+export default graphql(createGameMutation)(Home)

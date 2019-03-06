@@ -5,3 +5,11 @@ type Move {
   special: String
   notation: String
 }
+
+type Query {
+  getMoves(gameId: ID!): [Move!]!
+}
+
+type Mutation {
+  makeMove(id: ID!, from: String!, to: String!, promoteTo: String): Boolean!
+}
