@@ -7,9 +7,9 @@ module.exports = {
       return g.getGameStatus()
     },
 
-    playerInfo: (game, _, { playerId }) => ({
-      myTurn: false,
-      isWhite: false
+    playerInfo: (game, _, { games }) => ({
+      myTurn: true,
+      isWhite: true
     }),
 
     keySquares: (game, _, { games }) => {

@@ -6,6 +6,7 @@
   "license": "MIT",
   "dependencies": {
     "chess-engine": "../../chess-engine",
+    "express-session": "^1.15.6",
     "graphql": "^14.0.2",
     "graphql-yoga": "^1.16.9",
     "merge-graphql-schemas": "^1.5.8",
