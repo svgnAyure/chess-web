@@ -2,30 +2,10 @@ const shortid = require('shortid')
 
 module.exports = {
   Game: {
-    gameStatus: (game, _, { games }) => {
-      const g = games[game.id]
-      return g.getGameStatus()
-    },
-
     playerInfo: (game, _, { games }) => ({
       myTurn: true,
       isWhite: true
-    }),
-
-    keySquares: (game, _, { games }) => {
-      const g = games[game.id]
-      return g.getKeySquares()
-    },
-
-    legalMoves: (game, _, { games }) => {
-      const g = games[game.id]
-      return g.getLegalMoves()
-    },
-
-    moveHistory: (game, _, { games }) => {
-      const g = games[game.id]
-      return g.getMoveHistory().map(m => m.notation)
-    }
+    })
   },
 
   Query: {
@@ -34,10 +14,7 @@ module.exports = {
       if (!game) {
         return null
       }
-      return {
-        id: game.id,
-        fen: game.getFen()
-      }
+      return game
     }
   },
 
