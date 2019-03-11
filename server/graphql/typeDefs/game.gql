@@ -30,3 +30,7 @@ type Query {
 type Mutation {
   createGame: String!
 }
+
+type Subscription {
+  gameUpdated: Game!
+}

@@ -7,9 +7,21 @@ module.exports = {
   },
 
   Mutation: {
-    makeMove: (_, { id, from, to, promoteTo }, { games }) => {
+    makeMove: (_, { id, from, to, promoteTo }, { games, pubsub }) => {
       const game = games[id]
-      return game.makeMove({ from, to, promoteTo })
+      const move = game.makeMove({ from, to, promoteTo })
+
+      if (move) {
+        pubsub.publish('TEST', { gameUpdated: game })
+      }
+
+      return move
+    }
+  },
+
+  Subscription: {
+    gameUpdated: {
+      subscribe: (_, __, { pubsub }) => pubsub.asyncIterator('TEST')
     }
   }
 }

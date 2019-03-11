@@ -18,7 +18,15 @@ const initSession = (req, res, next) => {
   next()
 }
 
+const getSessionFromWebSocket = (connectionParams, webSocket) =>
+  new Promise(resolve =>
+    sessionParser(webSocket.upgradeReq, {}, () =>
+      resolve({ session: webSocket.upgradeReq.session })
+    )
+  )
+
 module.exports = {
   sessionParser,
-  initSession
+  initSession,
+  getSessionFromWebSocket
 }
