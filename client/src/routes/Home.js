@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { useMutation } from 'react-apollo-hooks'
 import { Link } from 'react-router-dom'
+
+import * as Layout from '../components/Layout'
 import createGameMutation from '../queries/createGameMutation'
 
 const Home = props => {
@@ -20,10 +22,15 @@ const Home = props => {
   }
 
   return (
-    <>
-      <h1>{`ID: ${id}`}</h1>
-      <Link to={`/${id}`}>Go to game</Link>
-    </>
+    <Layout.Container>
+      <Layout.Top>
+        <Link to="/">Home</Link>
+      </Layout.Top>
+      <Layout.Main>
+        <h1>{`ID: ${id}`}</h1>
+        <Link to={`/${id}`}>Go to game</Link>
+      </Layout.Main>
+    </Layout.Container>
   )
 }
 

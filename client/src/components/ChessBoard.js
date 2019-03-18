@@ -7,13 +7,43 @@ import getSquare from './Square'
 import { getSquareName } from '../utils/functions'
 import makeMoveMutation from '../queries/makeMoveMutation'
 
+const BoardFrame = styled.div`
+  display: grid;
+  grid-template: 1fr 16fr 1fr / 1fr 16fr 1fr;
+  width: fit-content;
+  height: fit-content;
+`
+
+const ColLabels = styled.div`
+  grid-row: 3;
+  grid-column: 2;
+  display: flex;
+  flex-direction: ${props => (props.isWhite ? 'row' : 'row-reverse')};
+`
+
+const RowLabels = styled.div`
+  grid-row: 2;
+  grid-column: 1;
+  display: flex;
+  flex-direction: ${props => (props.isWhite ? 'column' : 'column-reverse')};
+`
+
+const Label = styled.div`
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`
+
 const Board = styled.div`
   background-image: url(/img/chessboard.svg);
   width: 512px;
   height: 512px;
+  box-shadow: 0px 0px 20px 3px #999;
+  grid-row: 2;
+  grid-column: 2;
   display: grid;
-  grid-template-rows: repeat(8, 1fr);
-  grid-template-columns: repeat(8, 1fr);
+  grid-template: repeat(8, 1fr) / repeat(8, 1fr);
 `
 
 const ChessBoard = props => {
@@ -86,7 +116,21 @@ const ChessBoard = props => {
     return isWhite ? rows : [...rows.reverse()]
   }
 
-  return <Board>{renderSquares()}</Board>
+  return (
+    <BoardFrame>
+      <Board>{renderSquares()}</Board>
+      <RowLabels isWhite={props.playerInfo.isWhite}>
+        {['8', '7', '6', '5', '4', '3', '2', '1'].map(i => (
+          <Label key={i}>{i}</Label>
+        ))}
+      </RowLabels>
+      <ColLabels isWhite={props.playerInfo.isWhite}>
+        {['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'].map(i => (
+          <Label key={i}>{i}</Label>
+        ))}
+      </ColLabels>
+    </BoardFrame>
+  )
 }
 
 export default ChessBoard
