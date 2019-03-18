@@ -12,16 +12,10 @@ module.exports = {
       const move = game.makeMove({ from, to, promoteTo })
 
       if (move) {
-        pubsub.publish('TEST', { gameUpdated: game })
+        pubsub.publish('GAME_UPDATED', { gameUpdated: game })
       }
 
       return move
-    }
-  },
-
-  Subscription: {
-    gameUpdated: {
-      subscribe: (_, __, { pubsub }) => pubsub.asyncIterator('TEST')
     }
   }
 }

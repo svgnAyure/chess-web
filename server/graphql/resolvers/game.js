@@ -1,4 +1,5 @@
 const shortid = require('shortid')
+const { withFilter } = require('graphql-subscriptions')
 
 module.exports = {
   Game: {
@@ -24,6 +25,15 @@ module.exports = {
       game.id = shortid.generate()
       games[game.id] = game
       return game.id
+    }
+  },
+
+  Subscription: {
+    gameUpdated: {
+      subscribe: withFilter(
+        (_, __, { pubsub }) => pubsub.asyncIterator('GAME_UPDATED'),
+        ({ gameUpdated }, variables) => gameUpdated.id === variables.id
+      )
     }
   }
 }

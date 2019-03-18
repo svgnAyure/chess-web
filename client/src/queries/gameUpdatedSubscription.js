@@ -1,8 +1,8 @@
 import gql from 'graphql-tag'
 
 export default gql`
-  subscription {
-    gameUpdated {
+  subscription($id: ID!) {
+    gameUpdated(id: $id) {
       id
       fen
       gameStatus {
