@@ -1,20 +1,27 @@
 const shortid = require('shortid')
-const ChessGame = require('../../chess-engine')
+const ChessGame = require('../../../chess-engine')
 
 class GameStore {
   constructor() {
     this.games = {}
   }
 
-  createGame({ whiteId, blackId }) {
+  createGame({ startTime = 5, increment = 2 } = {}) {
     const game = new ChessGame()
-    const gameId = shortid.generate()
+    const id = shortid.generate()
 
-    game.id = gameId
-    game.whiteId = whiteId
-    game.blackId = blackId
+    game.id = id
+    game.time = {
+      startTime,
+      increment,
+      white: startTime * 60 * 1000,
+      black: startTime * 60 * 1000,
+      lastMoveTime: null,
+      lastMoveBy: null
+    }
 
-    this.games[gameId] = game
+    this.games[id] = game
+    return game
   }
 
   getGame(gameId) {

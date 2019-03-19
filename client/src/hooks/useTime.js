@@ -1,20 +1,26 @@
 import { useState, useEffect } from 'react'
 
-export const useTime = (a, toMove) => {
-  const [whiteTime, setWhiteTime] = useState(a)
-  const [blackTime, setBlackTime] = useState(a)
+export const useTime = ({ whiteTimeLeft, blackTimeLeft, toMove, fullMoves }) => {
+  const [whiteTime, setWhiteTime] = useState(whiteTimeLeft)
+  const [blackTime, setBlackTime] = useState(blackTimeLeft)
+  const runTimers = whiteTime > 0 && blackTime > 0 && fullMoves > 1
 
   useEffect(() => {
-    if (toMove === 'w') {
-      const timer = setInterval(() => setWhiteTime(whiteTime + 1), 1000)
-      return () => clearInterval(timer)
+    setWhiteTime(Number(whiteTimeLeft))
+    setBlackTime(Number(blackTimeLeft))
+  }, [whiteTimeLeft, blackTimeLeft])
+
+  useEffect(() => {
+    if (toMove === 'w' && runTimers) {
+      const interval = setInterval(() => setWhiteTime(t => t - 1000), 1000)
+      return () => clearInterval(interval)
     }
 
-    if (toMove === 'b') {
-      const timer = setInterval(() => setBlackTime(blackTime + 1), 1000)
-      return () => clearInterval(timer)
+    if (toMove === 'b' && runTimers) {
+      const interval = setInterval(() => setBlackTime(t => t - 1000), 1000)
+      return () => clearInterval(interval)
     }
-  })
+  }, [whiteTimeLeft, blackTimeLeft, runTimers])
 
   return { whiteTime, blackTime }
 }

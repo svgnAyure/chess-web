@@ -1,29 +1,31 @@
-const shortid = require('shortid')
 const { withFilter } = require('graphql-subscriptions')
 
 module.exports = {
   Game: {
-    playerInfo: (game, _, { games }) => ({
-      myTurn: true,
-      isWhite: true
-    })
+    startTime: game => game.time.startTime,
+    increment: game => game.time.increment,
+    playerInfo: (game, _, {}) => {
+      const now = Date.now()
+      const { white, black, lastMoveTime, lastMoveBy } = game.time
+      return {
+        myTurn: true,
+        isWhite: true,
+        whiteTimeLeft: Math.max(white - (lastMoveBy === 'b' ? now - lastMoveTime : 0), 0),
+        blackTimeLeft: Math.max(black - (lastMoveBy === 'w' ? now - lastMoveTime : 0), 0)
+      }
+    }
   },
 
   Query: {
     getGame: (_, { id }, { games }) => {
-      const game = games[id]
-      if (!game) {
-        return null
-      }
-      return game
+      const game = games.getGame(id)
+      return game ? game : null
     }
   },
 
   Mutation: {
-    createGame: (_, __, { ChessGame, games }) => {
-      const game = new ChessGame()
-      game.id = shortid.generate()
-      games[game.id] = game
+    createGame: (_, { startTime, increment }, { games }) => {
+      const game = games.createGame({ startTime: 0.1, increment })
       return game.id
     }
   },

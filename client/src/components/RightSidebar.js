@@ -3,6 +3,7 @@ import styled from 'styled-components'
 
 import { useScroll } from '../hooks/useScroll'
 import { useTime } from '../hooks/useTime'
+import { parseTime } from '../utils/functions'
 
 const SidebarContainer = styled.div`
   width: 250px;
@@ -55,26 +56,26 @@ const Move = styled.div`
 `
 
 const RightSidebar = props => {
-  const { isWhite } = props.playerInfo
-  const toMove = props.fen.split(' ')[1]
+  const { isWhite, whiteTimeLeft, blackTimeLeft } = props.playerInfo
+  const [, toMove, , , , fullMoves] = props.fen.split(' ')
 
   const moves = props.moveHistory.flatMap((m, i) => {
     const move = <Move key={`m-${i}`}>{m}</Move>
     const counter = i % 2 === 0 && <Counter key={`c-${i / 2 + 1}`}>{i / 2 + 1}</Counter>
-    return i % 2 === 0 ? [counter, move] : [move]
+    return counter ? [counter, move] : [move]
   })
 
-  const { scrollRef } = useScroll()
-  const { whiteTime, blackTime } = useTime(0, toMove)
+  const { scrollRef } = useScroll(props.fen)
+  const { whiteTime, blackTime } = useTime({ whiteTimeLeft, blackTimeLeft, toMove, fullMoves })
 
   return (
     <SidebarContainer>
       <MoveList ref={scrollRef}>{moves}</MoveList>
       <WhiteTimer isWhite={isWhite} toMove={toMove}>
-        {whiteTime}
+        {parseTime(whiteTime)}
       </WhiteTimer>
       <BlackTimer isWhite={isWhite} toMove={toMove}>
-        {blackTime}
+        {parseTime(blackTime)}
       </BlackTimer>
     </SidebarContainer>
   )

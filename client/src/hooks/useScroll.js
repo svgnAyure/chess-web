@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react'
 
-export const useScroll = () => {
+export const useScroll = fen => {
   const moveListRef = useRef(null)
 
   useEffect(() => {
@@ -9,7 +9,7 @@ export const useScroll = () => {
     if (lastMove) {
       lastMove.scrollIntoView({ behavior: 'smooth' })
     }
-  })
+  }, [fen])
 
   return { scrollRef: moveListRef }
 }

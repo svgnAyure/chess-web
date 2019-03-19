@@ -4,14 +4,13 @@ const { PubSub } = require('graphql-subscriptions')
 const { typeDefs, resolvers } = require('./graphql/schema')
 const { middlewares } = require('./graphql/middleware')
 const { sessionParser, initSession, getSessionFromWebSocket } = require('./session')
+const ChessStore = require('./utils/GameStore')
 
-const ChessGame = require('../../chess-engine')
-const games = {}
+const games = new ChessStore()
 const pubsub = new PubSub()
 
 const context = ({ request, connection }) => ({
   userId: request ? request.session.userId : connection.context.session.userId,
-  ChessGame,
   games,
   pubsub
 })

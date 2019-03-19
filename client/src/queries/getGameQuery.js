@@ -5,6 +5,8 @@ export default gql`
     getGame(id: $id) {
       id
       fen
+      startTime
+      increment
       gameStatus {
         isFinished
         statusText
@@ -18,6 +20,8 @@ export default gql`
       playerInfo {
         myTurn
         isWhite
+        whiteTimeLeft
+        blackTimeLeft
       }
       keySquares {
         checkSquare

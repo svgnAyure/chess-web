@@ -30,3 +30,10 @@ export const formatMoves = legalMoves =>
 export const getSquareName = (x, y) => {
   return `${String.fromCharCode(x + 97)}${y + 1}`
 }
+
+export const parseTime = ms => {
+  const totalSeconds = (ms / 1000).toFixed(0)
+  const minutes = `${~~(totalSeconds / 60)}`.padStart(2, '0')
+  const seconds = `${totalSeconds % 60}`.padStart(2, '0')
+  return `${minutes}:${seconds}`
+}

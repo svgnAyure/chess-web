@@ -1,6 +1,8 @@
 type Game {
   id: ID!
   fen: String!
+  startTime: String!
+  increment: String!
   legalMoves: [Move!]!
   moveHistory: [String!]!
   gameStatus: GameStatus!
@@ -16,6 +18,8 @@ type GameStatus {
 type PlayerInfo {
   myTurn: Boolean!
   isWhite: Boolean!
+  whiteTimeLeft: String!
+  blackTimeLeft: String!
 }
 
 type KeySquares {
