@@ -276,8 +276,9 @@ bytes@3.0.0:
   resolved "https://registry.yarnpkg.com/bytes/-/bytes-3.0.0.tgz#d32815404d689699f85a4ea4fa8755dd13a96048"
   integrity sha1-0ygVQE1olpn4Wk6k+odV3ROpYEg=
 
-chess-engine@../../chess-engine:
+"chess-engine@https://github.com/svgnAyure/chess-engine":
   version "1.0.0"
+  resolved "https://github.com/svgnAyure/chess-engine#1847de65223068abc38d579e40df45dca42df273"
 
 commander@^2.5.0:
   version "2.19.0"

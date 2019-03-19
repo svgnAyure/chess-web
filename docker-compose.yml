@@ -1,0 +1,18 @@
+version: '3'
+services:
+  client:
+    build: ./client
+    ports:
+      - '80:80'
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf
+    networks:
+      - webnet
+  server:
+    build: ./server
+    environment:
+      NODE_ENV: production
+    networks:
+      - webnet
+networks:
+  webnet:

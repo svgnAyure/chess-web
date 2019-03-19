@@ -1,5 +1,5 @@
 const shortid = require('shortid')
-const ChessGame = require('../../../chess-engine')
+const ChessGame = require('chess-engine')
 
 class GameStore {
   constructor() {
