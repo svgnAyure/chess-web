@@ -22,5 +22,8 @@ export const useTime = ({ whiteTimeLeft, blackTimeLeft, toMove, fullMoves }) => 
     }
   }, [whiteTimeLeft, blackTimeLeft, runTimers])
 
-  return { whiteTime, blackTime }
+  return {
+    whiteTime: Math.max(whiteTime, 0),
+    blackTime: Math.max(blackTime, 0)
+  }
 }
