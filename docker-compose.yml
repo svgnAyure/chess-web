@@ -1,5 +1,6 @@
 version: '3'
 services:
+  # Client - React application
   client:
     build: ./client
     ports:
@@ -8,11 +9,13 @@ services:
       - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf
     networks:
       - webnet
+  # Server - GraphQL-yoga server
   server:
     build: ./server
     environment:
       NODE_ENV: production
     networks:
       - webnet
+
 networks:
   webnet:
