@@ -9,21 +9,34 @@ module.exports = {
   Mutation: {
     makeMove: (_, { id, from, to, promoteTo }, { games, pubsub }) => {
       const game = games.getGame(id)
-      const [, toMove, , , , moveCount] = game.fen.split(' ')
       const move = game.makeMove({ from, to, promoteTo })
 
       if (move) {
-        const colour = toMove === 'w' ? 'white' : 'black'
-        const { increment, [colour]: timeLeft, lastMoveTime } = game.time
-        const isFirstMove = moveCount === '1'
+        const halfMoves = game.moveHistory.length
+        const shouldCostTime = halfMoves > 2
+        const shouldStartTimeout = halfMoves >= 2
+
+        const nextMoveColour = game.fen.split(' ')[1] === 'w' ? 'white' : 'black'
+        const prevMoveColour = nextMoveColour === 'white' ? 'black' : 'white'
+
+        const { increment, lastMoveTime, timeoutId, ...rest } = game.time
+        const { [prevMoveColour]: oldTimeLeft, [nextMoveColour]: otherTimeLeft } = rest
+        const newTimeLeft = oldTimeLeft + increment * 1000 - (Date.now() - lastMoveTime)
+
+        if (timeoutId) {
+          clearTimeout(timeoutId)
+        }
+
+        const onTimeout = () => {
+          console.log('hey')
+        }
 
         game.time = {
           ...game.time,
-          [colour]: isFirstMove
-            ? timeLeft
-            : timeLeft + increment * 1000 - (Date.now() - lastMoveTime),
+          [prevMoveColour]: shouldCostTime ? newTimeLeft : oldTimeLeft,
           lastMoveTime: Date.now(),
-          lastMoveBy: toMove
+          lastMoveBy: prevMoveColour[0],
+          timeoutId: shouldStartTimeout ? setTimeout(onTimeout, otherTimeLeft) : null
         }
 
         pubsub.publish('GAME_UPDATED', { gameUpdated: game })

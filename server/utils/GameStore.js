@@ -17,7 +17,8 @@ class GameStore {
       white: startTime * 60 * 1000,
       black: startTime * 60 * 1000,
       lastMoveTime: null,
-      lastMoveBy: null
+      lastMoveBy: null,
+      timeoutId: null
     }
 
     this.games[id] = game
