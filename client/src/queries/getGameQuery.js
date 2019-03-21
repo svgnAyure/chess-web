@@ -19,7 +19,7 @@ export default gql`
       }
       playerInfo {
         myTurn
-        isWhite
+        myColour
         whiteTimeLeft
         blackTimeLeft
       }

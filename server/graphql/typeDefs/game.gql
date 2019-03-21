@@ -17,7 +17,7 @@ type GameStatus {
 
 type PlayerInfo {
   myTurn: Boolean!
-  isWhite: Boolean!
+  myColour: String
   whiteTimeLeft: String!
   blackTimeLeft: String!
 }
@@ -32,7 +32,7 @@ type Query {
 }
 
 type Mutation {
-  createGame: String!
+  createGame(startTime: Int!, increment: Int!, colour: String!): String!
 }
 
 type Subscription {

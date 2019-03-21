@@ -4,12 +4,16 @@ module.exports = {
   Game: {
     startTime: game => game.time.startTime,
     increment: game => game.time.increment,
-    playerInfo: (game, _, {}) => {
+    playerInfo: (game, _, { userId }) => {
       const now = Date.now()
       const { white, black, lastMoveTime, lastMoveBy } = game.time
+
+      const toMove = game.fen.split[1]
+      const myColour = game.whiteId === userId ? 'w' : game.blackId === userId ? 'b' : null
+
       return {
-        myTurn: true,
-        isWhite: true,
+        myTurn: toMove === myColour,
+        myColour,
         whiteTimeLeft: Math.max(white - (lastMoveBy === 'b' ? now - lastMoveTime : 0), 0),
         blackTimeLeft: Math.max(black - (lastMoveBy === 'w' ? now - lastMoveTime : 0), 0)
       }
@@ -24,8 +28,8 @@ module.exports = {
   },
 
   Mutation: {
-    createGame: (_, { startTime, increment }, { games }) => {
-      const game = games.createGame({ startTime: 0.1, increment })
+    createGame: (_, { startTime, increment, colour }, { games, userId }) => {
+      const game = games.createGame({ startTime, increment, colour, userId })
       return game.id
     }
   },

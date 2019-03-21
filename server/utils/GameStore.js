@@ -6,11 +6,14 @@ class GameStore {
     this.games = {}
   }
 
-  createGame({ startTime = 5, increment = 2 } = {}) {
+  createGame({ startTime, increment, colour, userId } = {}) {
     const game = new ChessGame()
     const id = shortid.generate()
+    const side = colour === 'random' ? ['white', 'black'][~~(Math.random() * 2)] : colour
 
     game.id = id
+    game.whiteId = side === 'white' ? userId : null
+    game.blackId = side === 'black' ? userId : null
     game.time = {
       startTime,
       increment,

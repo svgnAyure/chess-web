@@ -17,18 +17,18 @@ const Timer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0px 0px 20px 3px #999;
+  box-shadow: 0px 1px 2px #999;
   font-size: 2.6rem;
 `
 
 const WhiteTimer = styled(Timer)`
   grid-row: ${p => (p.isWhite ? 3 : 1)};
-  background: ${p => (p.toMove === 'w' ? '#dee' : 'transparent')};
+  background: ${p => (p.toMove === 'w' ? '#eff' : '#f5f5f5')};
 `
 
 const BlackTimer = styled(Timer)`
   grid-row: ${p => (p.isWhite ? 1 : 3)};
-  background: ${p => (p.toMove === 'b' ? '#dee' : 'transparent')};
+  background: ${p => (p.toMove === 'b' ? '#eff' : '#f5f5f5')};
 `
 
 const MoveList = styled.div`
@@ -37,7 +37,8 @@ const MoveList = styled.div`
   display: grid;
   grid-template-columns: 1fr 2fr 2fr;
   grid-auto-rows: max-content;
-  box-shadow: 0px 0px 20px 3px #999;
+  box-shadow: 0px 1px 2px #999;
+  background: #f5f5f5;
 `
 
 const Counter = styled.div`
@@ -51,7 +52,7 @@ const Move = styled.div`
   padding: 5px 10px;
 
   :last-child {
-    background: #dee;
+    background: #eff;
   }
 `
 

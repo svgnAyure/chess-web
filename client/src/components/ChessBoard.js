@@ -39,7 +39,7 @@ const Board = styled.div`
   background-image: url(/img/chessboard.svg);
   width: 512px;
   height: 512px;
-  box-shadow: 0px 0px 20px 3px #999;
+  box-shadow: 0px 1px 2px #999;
   grid-row: 2;
   grid-column: 2;
   display: grid;
@@ -100,7 +100,7 @@ const ChessBoard = props => {
   }
 
   const renderSquares = () => {
-    const { isWhite } = props.playerInfo
+    const { myColour } = props.playerInfo
     const chars = props.fen.split(' ')[0].split('/')
     const rows = chars.flatMap((r, y) => {
       let x = 0
@@ -113,7 +113,7 @@ const ChessBoard = props => {
         })
       })
     })
-    return isWhite ? rows : [...rows.reverse()]
+    return myColour === 'b' ? [...rows.reverse()] : rows
   }
 
   return (

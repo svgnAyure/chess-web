@@ -19,8 +19,7 @@ const Game = props => {
     return <Redirect to="/" />
   }
 
-  const { id, fen, gameStatus, playerInfo, legalMoves, keySquares, moveHistory } = game
-  const { moves, captures, promotions } = formatMoves(legalMoves)
+  const { moves, captures, promotions } = formatMoves(game.legalMoves)
 
   return (
     <Layout.Container>
@@ -29,29 +28,33 @@ const Game = props => {
       </Layout.Top>
 
       <Layout.Left>
-        <LeftSidebar />
+        <LeftSidebar
+          startTime={game.startTime}
+          increment={game.increment}
+          playerInfo={game.playerInfo}
+        />
       </Layout.Left>
 
       <Layout.Main>
         <ChessBoard
-          id={id}
-          fen={fen}
-          gameStatus={gameStatus}
-          playerInfo={playerInfo}
+          id={game.id}
+          fen={game.fen}
+          gameStatus={game.gameStatus}
+          playerInfo={game.playerInfo}
           moves={moves}
           captures={captures}
           promotions={promotions}
-          keySquares={keySquares}
+          keySquares={game.keySquares}
         />
       </Layout.Main>
 
       <Layout.Right>
         <RightSidebar
-          id={id}
-          fen={fen}
-          moveHistory={moveHistory}
-          gameStatus={gameStatus}
-          playerInfo={playerInfo}
+          id={game.id}
+          fen={game.fen}
+          moveHistory={game.moveHistory}
+          gameStatus={game.gameStatus}
+          playerInfo={game.playerInfo}
         />
       </Layout.Right>
     </Layout.Container>
