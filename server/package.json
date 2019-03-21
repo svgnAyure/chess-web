@@ -7,9 +7,9 @@
   "dependencies": {
     "chess-engine": "https://github.com/svgnAyure/chess-engine",
     "express-session": "^1.15.6",
-    "graphql": "^14.0.2",
+    "graphql": "^14.1.1",
     "graphql-subscriptions": "^1.0.0",
-    "graphql-yoga": "^1.16.9",
+    "graphql-yoga": "^1.17.4",
     "merge-graphql-schemas": "^1.5.8",
     "shortid": "^2.2.14"
   }
