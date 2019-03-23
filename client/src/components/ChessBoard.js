@@ -18,14 +18,14 @@ const ColLabels = styled.div`
   grid-row: 3;
   grid-column: 2;
   display: flex;
-  flex-direction: ${props => (props.isWhite ? 'row' : 'row-reverse')};
+  flex-direction: ${p => (p.myColour === 'b' ? 'row-reverse' : 'row')};
 `
 
 const RowLabels = styled.div`
   grid-row: 2;
   grid-column: 1;
   display: flex;
-  flex-direction: ${props => (props.isWhite ? 'column' : 'column-reverse')};
+  flex-direction: ${p => (p.myColour === 'b' ? 'column-reverse' : 'column')};
 `
 
 const Label = styled.div`
@@ -47,45 +47,53 @@ const Board = styled.div`
 `
 
 const ChessBoard = props => {
-  const [activeSquare, setActiveSquare] = useState('')
-  const [canMoveTo, setCanMoveTo] = useState([])
-  const [canCapture, setCanCapture] = useState([])
-  const makeMove = useMutation(makeMoveMutation)
+  const [selectedSquare, setSelectedSquare] = useState('')
+  const [clickedSquare, setClickedSquare] = useState('')
 
-  const resetState = () => {
-    setActiveSquare('')
-    setCanMoveTo([])
-    setCanCapture([])
-  }
+  const makeMove = useMutation(makeMoveMutation)
+  const canMoveTo = props.moves[selectedSquare] || []
+  const canCapture = props.captures[selectedSquare] || []
 
   const handleClick = e => {
-    const selectedSquare = e.currentTarget.id
-    const hasPiece = e.currentTarget.children.length
+    setSelectedSquare('')
+  }
 
-    if ([...canMoveTo, ...canCapture].includes(selectedSquare)) {
-      makeMove({
-        variables: { id: props.id, from: activeSquare, to: selectedSquare }
-      })
-      return resetState()
+  const handleMouseDown = e => {
+    e.preventDefault()
+    const { id: square, children } = e.currentTarget
+    if ([...canMoveTo, ...canCapture].includes(square)) {
+      handleMove({ from: selectedSquare, to: square })
+      setSelectedSquare('')
+    } else if (children.length) {
+      setSelectedSquare(square)
+      setClickedSquare(square)
+    } else {
+      setSelectedSquare('')
     }
+  }
 
-    if (selectedSquare === activeSquare || !hasPiece) {
-      return resetState()
+  const handleMouseUp = e => {
+    const { id: square } = e.currentTarget
+    if (clickedSquare && square !== clickedSquare) {
+      if ([...canMoveTo, ...canCapture].includes(square)) {
+        handleMove({ from: selectedSquare, to: square })
+      }
+      setSelectedSquare('')
     }
+    setClickedSquare('')
+  }
 
-    if (hasPiece) {
-      setActiveSquare(selectedSquare)
-      setCanMoveTo(props.moves[selectedSquare] || [])
-      setCanCapture(props.captures[selectedSquare] || [])
-      return
-    }
+  const handleMove = ({ from, to }) => {
+    makeMove({
+      variables: { id: props.id, from, to }
+    })
   }
 
   const renderSquare = (x, y, c) => {
     const id = getSquareName(x, 7 - y)
     const Piece = getPiece(c)
     const Square = getSquare({
-      active: activeSquare === id,
+      active: selectedSquare === id,
       canMoveTo: canMoveTo.includes(id),
       canCapture: canCapture.includes(id),
       lastMove: props.keySquares.lastMove.includes(id),
@@ -93,7 +101,13 @@ const ChessBoard = props => {
     })
 
     return (
-      <Square key={id} id={id} onClick={handleClick}>
+      <Square
+        key={id}
+        id={id}
+        onClick={handleClick}
+        onMouseDown={handleMouseDown}
+        onMouseUp={handleMouseUp}
+      >
         {Piece && <Piece />}
       </Square>
     )
@@ -119,12 +133,12 @@ const ChessBoard = props => {
   return (
     <BoardFrame>
       <Board>{renderSquares()}</Board>
-      <RowLabels isWhite={props.playerInfo.isWhite}>
+      <RowLabels myColour={props.playerInfo.myColour}>
         {['8', '7', '6', '5', '4', '3', '2', '1'].map(i => (
           <Label key={i}>{i}</Label>
         ))}
       </RowLabels>
-      <ColLabels isWhite={props.playerInfo.isWhite}>
+      <ColLabels myColour={props.playerInfo.myColour}>
         {['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'].map(i => (
           <Label key={i}>{i}</Label>
         ))}
