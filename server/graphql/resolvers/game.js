@@ -8,7 +8,7 @@ module.exports = {
       const now = Date.now()
       const { white, black, lastMoveTime, lastMoveBy } = game.time
 
-      const toMove = game.fen.split[1]
+      const toMove = game.fen.split(' ')[1]
       const myColour = game.whiteId === userId ? 'w' : game.blackId === userId ? 'b' : null
 
       return {

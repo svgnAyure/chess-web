@@ -36,7 +36,13 @@ const ButtonsContainer = styled.div`
   column-gap: 15px;
 `
 
-const Button = styled.button``
+const Button = styled.button`
+  padding: 5px;
+  img {
+    width: 45px;
+    height: 45px;
+  }
+`
 
 const CreateGamePane = props => {
   const sliderOptions = [0, 1, 2, 3, 4, 5, 10, 15, 20, 25, 30, 45, 60, 90, 120, 150, 180]
@@ -84,7 +90,7 @@ const CreateGamePane = props => {
             <div>White</div>
           </Button>
           <Button id="random" onClick={handleSelectColour}>
-            <img alt="" src="/img/pieces/random_king.svg" />
+            <img alt="" src="/img/random.svg" />
             <div>Random</div>
           </Button>
           <Button id="black" onClick={handleSelectColour}>

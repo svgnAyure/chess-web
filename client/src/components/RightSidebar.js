@@ -22,12 +22,12 @@ const Timer = styled.div`
 `
 
 const WhiteTimer = styled(Timer)`
-  grid-row: ${p => (p.isWhite ? 3 : 1)};
+  grid-row: ${p => (p.myColour === 'b' ? 1 : 3)};
   background: ${p => (p.toMove === 'w' ? '#eff' : '#f5f5f5')};
 `
 
 const BlackTimer = styled(Timer)`
-  grid-row: ${p => (p.isWhite ? 1 : 3)};
+  grid-row: ${p => (p.myColour === 'b' ? 3 : 1)};
   background: ${p => (p.toMove === 'b' ? '#eff' : '#f5f5f5')};
 `
 
@@ -57,7 +57,7 @@ const Move = styled.div`
 `
 
 const RightSidebar = props => {
-  const { isWhite, whiteTimeLeft, blackTimeLeft } = props.playerInfo
+  const { myColour, whiteTimeLeft, blackTimeLeft } = props.playerInfo
   const [, toMove, , , , fullMoves] = props.fen.split(' ')
 
   const moves = props.moveHistory.flatMap((m, i) => {
@@ -72,10 +72,10 @@ const RightSidebar = props => {
   return (
     <SidebarContainer>
       <MoveList ref={scrollRef}>{moves}</MoveList>
-      <WhiteTimer isWhite={isWhite} toMove={toMove}>
+      <WhiteTimer myColour={myColour} toMove={toMove}>
         {parseTime(whiteTime)}
       </WhiteTimer>
-      <BlackTimer isWhite={isWhite} toMove={toMove}>
+      <BlackTimer myColour={myColour} toMove={toMove}>
         {parseTime(blackTime)}
       </BlackTimer>
     </SidebarContainer>

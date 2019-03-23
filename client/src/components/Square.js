@@ -10,10 +10,18 @@ const ActiveSquare = styled(Square)`
 
 const CanMoveToSquare = styled(Square)`
   background: radial-gradient(rgba(20, 85, 30, 0.3) 17%, transparent 0);
+
+  :hover {
+    background: rgba(20, 85, 30, 0.3);
+  }
 `
 
 const CanCaptureSquare = styled(Square)`
   background: radial-gradient(transparent 75%, rgba(20, 85, 0, 0.3) 0);
+
+  :hover {
+    background: rgba(20, 85, 30, 0.3);
+  }
 `
 
 const LastMoveSquare = styled(Square)`
