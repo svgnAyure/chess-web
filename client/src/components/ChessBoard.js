@@ -8,6 +8,7 @@ import { getSquareName } from '../utils/functions'
 import makeMoveMutation from '../queries/makeMoveMutation'
 
 const BoardFrame = styled.div`
+  position: relative;
   display: grid;
   grid-template: 1fr 16fr 1fr / 1fr 16fr 1fr;
   width: fit-content;
@@ -46,13 +47,39 @@ const Board = styled.div`
   grid-template: repeat(8, 1fr) / repeat(8, 1fr);
 `
 
+const DragImage = styled.div.attrs(p => ({
+  style: {
+    left: p.x - 32,
+    top: p.y - 32
+  }
+}))`
+  width: 64px;
+  height: 64px;
+  position: fixed;
+  pointer-events: none;
+`
+
 const ChessBoard = props => {
   const [selectedSquare, setSelectedSquare] = useState('')
-  const [clickedSquare, setClickedSquare] = useState('')
+  const [draggedSquare, setDraggedSquare] = useState('')
+  const [dragCoordinates, setDragCoordinates] = useState({ x: 0, y: 0 })
+  const [dragClassName, setDragClassName] = useState(null)
 
   const makeMove = useMutation(makeMoveMutation)
   const canMoveTo = props.moves[selectedSquare] || []
   const canCapture = props.captures[selectedSquare] || []
+
+  const handleMouseMove = e => {
+    if (draggedSquare) {
+      const { pageX: x, pageY: y } = e
+      setDragCoordinates({ x, y })
+    }
+  }
+
+  const handleMouseLeave = e => {
+    setSelectedSquare('')
+    setDraggedSquare('')
+  }
 
   const handleClick = e => {
     setSelectedSquare('')
@@ -60,27 +87,31 @@ const ChessBoard = props => {
 
   const handleMouseDown = e => {
     e.preventDefault()
+    const { pageX: x, pageY: y } = e
     const { id: square, children } = e.currentTarget
+
     if ([...canMoveTo, ...canCapture].includes(square)) {
       handleMove({ from: selectedSquare, to: square })
       setSelectedSquare('')
     } else if (children.length) {
       setSelectedSquare(square)
-      setClickedSquare(square)
+      setDraggedSquare(square)
+      setDragClassName(children[0].className)
     } else {
       setSelectedSquare('')
     }
+    setDragCoordinates({ x, y })
   }
 
   const handleMouseUp = e => {
     const { id: square } = e.currentTarget
-    if (clickedSquare && square !== clickedSquare) {
+    if (draggedSquare && square !== draggedSquare) {
       if ([...canMoveTo, ...canCapture].includes(square)) {
         handleMove({ from: selectedSquare, to: square })
       }
       setSelectedSquare('')
     }
-    setClickedSquare('')
+    setDraggedSquare('')
   }
 
   const handleMove = ({ from, to }) => {
@@ -108,7 +139,7 @@ const ChessBoard = props => {
         onMouseDown={handleMouseDown}
         onMouseUp={handleMouseUp}
       >
-        {Piece && <Piece />}
+        {Piece && <Piece isBeingDragged={draggedSquare === id} />}
       </Square>
     )
   }
@@ -132,7 +163,9 @@ const ChessBoard = props => {
 
   return (
     <BoardFrame>
-      <Board>{renderSquares()}</Board>
+      <Board onMouseMove={handleMouseMove} onMouseLeave={handleMouseLeave}>
+        {renderSquares()}
+      </Board>
       <RowLabels myColour={props.playerInfo.myColour}>
         {['8', '7', '6', '5', '4', '3', '2', '1'].map(i => (
           <Label key={i}>{i}</Label>
@@ -143,6 +176,9 @@ const ChessBoard = props => {
           <Label key={i}>{i}</Label>
         ))}
       </ColLabels>
+      {draggedSquare && (
+        <DragImage className={dragClassName} x={dragCoordinates.x} y={dragCoordinates.y} />
+      )}
     </BoardFrame>
   )
 }

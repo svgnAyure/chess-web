@@ -4,6 +4,7 @@ const Piece = styled.div`
   background-size: 100%;
   width: 100%;
   height: 100%;
+  opacity: ${p => (p.isBeingDragged ? 0.3 : 1)};
 `
 
 const BlackPawn = styled(Piece)`
