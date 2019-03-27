@@ -1,5 +1,5 @@
 const session = require('express-session')
-const shortid = require('shortid')
+const alphanumeric = require('alphanumeric-id')
 
 const sessionParser = session({
   name: 's',
@@ -14,7 +14,7 @@ const sessionParser = session({
 
 const initSession = (req, res, next) => {
   const userId = req.session.userId
-  req.session.userId = userId ? userId : shortid.generate()
+  req.session.userId = userId ? userId : alphanumeric(8)
   next()
 }
 

@@ -87,6 +87,11 @@ const ChessBoard = props => {
 
   const handleMouseDown = e => {
     e.preventDefault()
+
+    if (props.waitingForPlayer || !props.playerInfo.myTurn) {
+      return
+    }
+
     const { pageX: x, pageY: y } = e
     const { id: square, children } = e.currentTarget
 

@@ -9,7 +9,8 @@ export const useGame = id => {
   })
 
   useSubscription(gameUpdatedSubscription, {
-    variables: { id }
+    variables: { id },
+    skip: !data.getGame
   })
 
   return {

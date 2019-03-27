@@ -5,4 +5,4 @@ COPY . .
 RUN yarn
 
 EXPOSE 4000
-CMD ["node", "index.js"]
+CMD ["yarn", "start"]

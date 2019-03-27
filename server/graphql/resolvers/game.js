@@ -31,6 +31,17 @@ module.exports = {
     createGame: (_, { startTime, increment, colour }, { games, userId }) => {
       const game = games.createGame({ startTime, increment, colour, userId })
       return game.id
+    },
+
+    joinGame: (_, { id }, { games, pubsub, userId }) => {
+      const game = games.joinGame(id, userId)
+
+      if (game) {
+        pubsub.publish('GAME_UPDATED', { gameUpdated: game })
+        return true
+      }
+
+      return false
     }
   },
 

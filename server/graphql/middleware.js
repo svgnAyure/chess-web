@@ -7,6 +7,9 @@ const middlewares = {
   }
 }
 
-module.exports = {
-  middlewares
+const test = (resolve, parent, ctx, info) => {
+  console.log('success')
+  return resolve()
 }
+
+module.exports = [test, middlewares]

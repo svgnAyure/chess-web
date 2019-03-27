@@ -14,7 +14,7 @@ module.exports = {
       if (move) {
         const halfMoves = game.moveHistory.length
         const shouldCostTime = halfMoves > 2
-        const shouldStartTimeout = halfMoves >= 2
+        const shouldStartTimeout = halfMoves >= 2 && !game.gameStatus.isFinished
 
         const nextMoveColour = game.fen.split(' ')[1] === 'w' ? 'white' : 'black'
         const prevMoveColour = nextMoveColour === 'white' ? 'black' : 'white'

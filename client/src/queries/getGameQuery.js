@@ -7,6 +7,7 @@ export default gql`
       fen
       startTime
       increment
+      status
       gameStatus {
         isFinished
         statusText

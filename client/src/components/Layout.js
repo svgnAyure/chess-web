@@ -13,6 +13,7 @@ export const Top = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  border-bottom: 1px solid #ccc;
 `
 
 export const Left = styled.div`
@@ -29,6 +30,7 @@ export const Main = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  position: relative;
 `
 
 export const Right = styled.div`

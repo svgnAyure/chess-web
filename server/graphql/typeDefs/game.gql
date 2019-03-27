@@ -3,6 +3,7 @@ type Game {
   fen: String!
   startTime: String!
   increment: String!
+  status: String!
   legalMoves: [Move!]!
   moveHistory: [String!]!
   gameStatus: GameStatus!
@@ -33,6 +34,7 @@ type Query {
 
 type Mutation {
   createGame(startTime: Int!, increment: Int!, colour: String!): String!
+  joinGame(id: ID!): Boolean!
 }
 
 type Subscription {

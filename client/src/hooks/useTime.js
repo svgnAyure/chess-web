@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react'
 
-export const useTime = ({ whiteTimeLeft, blackTimeLeft, toMove, fullMoves }) => {
+export const useTime = ({ whiteTimeLeft, blackTimeLeft, toMove, fullMoves, isFinished }) => {
   const [whiteTime, setWhiteTime] = useState(whiteTimeLeft)
   const [blackTime, setBlackTime] = useState(blackTimeLeft)
-  const runTimers = whiteTime > 0 && blackTime > 0 && fullMoves > 1
+  const runTimers = whiteTime > 0 && blackTime > 0 && fullMoves > 1 && !isFinished
 
   useEffect(() => {
     setWhiteTime(Number(whiteTimeLeft))

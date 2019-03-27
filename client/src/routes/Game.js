@@ -3,6 +3,7 @@ import { Link, Redirect } from 'react-router-dom'
 
 import * as Layout from '../components/Layout'
 import ChessBoard from '../components/ChessBoard'
+import JoinGamePane from '../components/JoinGamePane'
 import LeftSidebar from '../components/LeftSidebar'
 import RightSidebar from '../components/RightSidebar'
 import { useGame } from '../hooks/useGame'
@@ -20,6 +21,9 @@ const Game = props => {
   }
 
   const { moves, captures, promotions } = formatMoves(game.legalMoves)
+  const waitingForWhite = game.status === 'waitingForWhite'
+  const waitingForBlack = game.status === 'waitingForBlack'
+  const waitingForPlayer = waitingForBlack || waitingForWhite
 
   return (
     <Layout.Container>
@@ -39,6 +43,7 @@ const Game = props => {
         <ChessBoard
           id={game.id}
           fen={game.fen}
+          waitingForPlayer={waitingForPlayer}
           gameStatus={game.gameStatus}
           playerInfo={game.playerInfo}
           moves={moves}
@@ -46,6 +51,13 @@ const Game = props => {
           promotions={promotions}
           keySquares={game.keySquares}
         />
+        {waitingForPlayer && (
+          <JoinGamePane
+            id={game.id}
+            waitingFor={waitingForBlack ? 'b' : waitingForWhite ? 'w' : null}
+            playerInfo={game.playerInfo}
+          />
+        )}
       </Layout.Main>
 
       <Layout.Right>

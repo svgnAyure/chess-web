@@ -17,7 +17,7 @@ const CreateGameContainer = styled.div`
   grid-template: auto repeat(3, 1fr) / 1fr;
 `
 
-const SubContainer = styled.div`
+const Section = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -45,11 +45,13 @@ const Button = styled.button`
 `
 
 const CreateGamePane = props => {
-  const sliderOptions = [0, 1, 2, 3, 4, 5, 10, 15, 20, 25, 30, 45, 60, 90, 120, 150, 180]
   const [startTime, setStartTime] = useState(5)
-  const [increment, setIncrement] = useState(2)
-  const createGame = useMutation(createGameMutation)
+  const [increment, setIncrement] = useState(3)
+
   const { history } = useRouter()
+  const createGame = useMutation(createGameMutation)
+
+  const sliderOptions = [0, 1, 2, 3, 4, 5, 10, 15, 20, 25, 30, 45, 60, 90, 120, 150, 180]
 
   const handleChangeTime = e => {
     setStartTime(sliderOptions[e.target.value])
@@ -67,22 +69,22 @@ const CreateGamePane = props => {
 
   return (
     <CreateGameContainer>
-      <SubContainer>
+      <Section>
         <h2 style={{ alignSelf: 'center' }}>Create new game</h2>
-      </SubContainer>
-      <SubContainer>
+      </Section>
+      <Section>
         <p>
           Minutes per side: <b>{startTime}</b>
         </p>
         <RangeInput min={1} max={16} default={startTime} onChange={handleChangeTime} />
-      </SubContainer>
-      <SubContainer>
+      </Section>
+      <Section>
         <p>
           Increment in seconds: <b>{increment}</b>
         </p>
         <RangeInput min={0} max={16} default={increment} onChange={handleChangeIncrement} />
-      </SubContainer>
-      <SubContainer>
+      </Section>
+      <Section>
         <p>Choose colour:</p>
         <ButtonsContainer>
           <Button id="white" onClick={handleSelectColour}>
@@ -98,7 +100,7 @@ const CreateGamePane = props => {
             <div>Black</div>
           </Button>
         </ButtonsContainer>
-      </SubContainer>
+      </Section>
     </CreateGameContainer>
   )
 }

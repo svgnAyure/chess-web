@@ -58,6 +58,7 @@ const Move = styled.div`
 
 const RightSidebar = props => {
   const { myColour, whiteTimeLeft, blackTimeLeft } = props.playerInfo
+  const { isFinished } = props.gameStatus
   const [, toMove, , , , fullMoves] = props.fen.split(' ')
 
   const moves = props.moveHistory.flatMap((m, i) => {
@@ -67,7 +68,13 @@ const RightSidebar = props => {
   })
 
   const { scrollRef } = useScroll(props.fen)
-  const { whiteTime, blackTime } = useTime({ whiteTimeLeft, blackTimeLeft, toMove, fullMoves })
+  const { whiteTime, blackTime } = useTime({
+    whiteTimeLeft,
+    blackTimeLeft,
+    toMove,
+    fullMoves,
+    isFinished
+  })
 
   return (
     <SidebarContainer>
