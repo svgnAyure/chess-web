@@ -30,6 +30,9 @@ type KeySquares {
 
 type Query {
   getGame(id: ID!): Game
+  getGameCount: Int!
+  myGames: [Game!]!
+  openGames: [Game!]!
 }
 
 type Mutation {
@@ -38,5 +41,8 @@ type Mutation {
 }
 
 type Subscription {
+  gameCountUpdated: Int!
   gameUpdated(id: ID!): Game!
+  myGamesUpdated: [Game!]
+  openGamesUpdated: [Game!]
 }

@@ -24,33 +24,61 @@ module.exports = {
     getGame: (_, { id }, { games }) => {
       const game = games.getGame(id)
       return game ? game : null
+    },
+
+    getGameCount: (_, __, { games }) => {
+      return games.getGames().length
+    },
+
+    myGames: (_, __, { games, userId }) => {
+      return games.getGames().filter(g => g.whiteId === userId || g.blackId === userId)
+    },
+
+    openGames: (_, __, { games }) => {
+      return games.getGames().filter(g => g.status.includes('waitingFor'))
     }
   },
 
   Mutation: {
-    createGame: (_, { startTime, increment, colour }, { games, userId }) => {
+    createGame: (_, { startTime, increment, colour }, { games, userId, pubsub }) => {
       const game = games.createGame({ startTime, increment, colour, userId })
+      pubsub.publish('GAME_CREATED', { gameCountUpdated: 1, gameCreated: game })
       return game.id
     },
 
     joinGame: (_, { id }, { games, pubsub, userId }) => {
       const game = games.joinGame(id, userId)
-
       if (game) {
-        pubsub.publish('GAME_UPDATED', { gameUpdated: game })
+        pubsub.publish('GAME_JOINED', { gameUpdated: game })
         return true
+      } else {
+        return false
       }
-
-      return false
     }
   },
 
   Subscription: {
+    gameCountUpdated: {
+      subscribe: (_, __, { pubsub }) => pubsub.asyncIterator(['GAME_CREATED'])
+    },
     gameUpdated: {
       subscribe: withFilter(
-        (_, __, { pubsub }) => pubsub.asyncIterator('GAME_UPDATED'),
+        (_, __, { pubsub }) => pubsub.asyncIterator(['GAME_UPDATED', 'GAME_JOINED']),
         ({ gameUpdated }, variables) => gameUpdated.id === variables.id
       )
+    },
+    myGamesUpdated: {
+      resolve: (_, __, { userId, games }) =>
+        games.getGames().filter(g => g.whiteId === userId || g.blackId === userId),
+      subscribe: withFilter(
+        (_, __, { pubsub }) => pubsub.asyncIterator(['GAME_UPDATED', 'GAME_JOINED']),
+        (payload, _, { userId }) =>
+          payload.gameUpdated.whiteId === userId || payload.gameUpdated.blackId === userId
+      )
+    },
+    openGamesUpdated: {
+      resolve: (_, __, { games }) => games.getGames().filter(g => g.status.includes('waitingFor')),
+      subscribe: (_, __, { pubsub }) => pubsub.asyncIterator(['GAME_CREATED', 'GAME_JOINED'])
     }
   }
 }

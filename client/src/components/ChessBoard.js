@@ -119,10 +119,14 @@ const ChessBoard = props => {
     setDraggedSquare('')
   }
 
-  const handleMove = ({ from, to }) => {
-    makeMove({
+  const handleMove = async ({ from, to }) => {
+    const { data } = await makeMove({
       variables: { id: props.id, from, to }
     })
+
+    if (!data.makeMove) {
+      window.location.reload()
+    }
   }
 
   const renderSquare = (x, y, c) => {

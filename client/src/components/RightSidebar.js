@@ -32,13 +32,17 @@ const BlackTimer = styled(Timer)`
 `
 
 const MoveList = styled.div`
-  overflow-y: auto;
+  overflow-y: hidden;
   grid-row: 2;
   display: grid;
   grid-template-columns: 1fr 2fr 2fr;
   grid-auto-rows: max-content;
   box-shadow: 0px 1px 2px #999;
   background: #f5f5f5;
+
+  :hover {
+    overflow-y: overlay;
+  }
 `
 
 const Counter = styled.div`

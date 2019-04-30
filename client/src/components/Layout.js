@@ -3,7 +3,7 @@ import styled from 'styled-components'
 export const Container = styled.div`
   display: grid;
   height: 100vh;
-  grid-template: 64px min-content / 1fr max-content 1fr;
+  grid-template: 100px min-content / 1fr max-content 1fr;
   grid-column-gap: 10px;
 `
 
@@ -14,6 +14,7 @@ export const Top = styled.div`
   justify-content: center;
   align-items: center;
   border-bottom: 1px solid #ccc;
+  background: #e5e5e5;
 `
 
 export const Left = styled.div`

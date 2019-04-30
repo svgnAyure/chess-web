@@ -9,8 +9,11 @@ module.exports = {
   Mutation: {
     makeMove: (_, { id, from, to, promoteTo }, { games, pubsub }) => {
       const game = games.getGame(id)
-      const move = game.makeMove({ from, to, promoteTo })
+      if (!game) {
+        return false
+      }
 
+      const move = game.makeMove({ from, to, promoteTo })
       if (move) {
         const halfMoves = game.moveHistory.length
         const shouldCostTime = halfMoves > 2
@@ -31,6 +34,7 @@ module.exports = {
           console.log('hey')
         }
 
+        game.status = halfMoves > 1 ? 'inProgress' : 'ready'
         game.time = {
           ...game.time,
           [prevMoveColour]: shouldCostTime ? newTimeLeft : oldTimeLeft,

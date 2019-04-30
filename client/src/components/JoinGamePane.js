@@ -58,8 +58,11 @@ const JoinGamePane = props => {
   const joinGame = useMutation(joinGameMutation)
   const linkRef = useRef(null)
 
-  const handleJoinGame = e => {
-    joinGame({ variables: { id } })
+  const handleJoinGame = async e => {
+    const { data } = await joinGame({ variables: { id } })
+    if (!data.joinGame) {
+      window.location.reload()
+    }
   }
 
   const handleCopyLink = e => {
@@ -73,7 +76,11 @@ const JoinGamePane = props => {
         <>
           <h3>Waiting for opponent</h3>
           <LinkGroup>
-            <LinkInput ref={linkRef} value={`http://109.247.216.255/${id}`} readOnly />
+            <LinkInput
+              ref={linkRef}
+              value={`http://${process.env.REACT_APP_CLIENT_URL}/${id}`}
+              readOnly
+            />
             <Button onClick={handleCopyLink}>
               <img alt="" src="/img/copy.svg" />
             </Button>

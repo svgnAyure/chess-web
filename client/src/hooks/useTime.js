@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 
-export const useTime = ({ whiteTimeLeft, blackTimeLeft, toMove, fullMoves, isFinished }) => {
+export const useTime = ({ whiteTimeLeft, blackTimeLeft, isFinished, toMove, fullMoves }) => {
   const [whiteTime, setWhiteTime] = useState(whiteTimeLeft)
   const [blackTime, setBlackTime] = useState(blackTimeLeft)
   const runTimers = whiteTime > 0 && blackTime > 0 && fullMoves > 1 && !isFinished
@@ -22,8 +22,11 @@ export const useTime = ({ whiteTimeLeft, blackTimeLeft, toMove, fullMoves, isFin
     }
   }, [whiteTimeLeft, blackTimeLeft, runTimers])
 
+  const netWhiteTime = Math.max(whiteTime, 0)
+  const netBlackTime = Math.max(blackTime, 0)
+
   return {
-    whiteTime: Math.max(whiteTime, 0),
-    blackTime: Math.max(blackTime, 0)
+    whiteTime: netWhiteTime,
+    blackTime: netBlackTime
   }
 }

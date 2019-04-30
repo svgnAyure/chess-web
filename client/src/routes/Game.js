@@ -1,4 +1,5 @@
 import React from 'react'
+import styled from 'styled-components'
 import { Link, Redirect } from 'react-router-dom'
 
 import * as Layout from '../components/Layout'
@@ -8,6 +9,22 @@ import LeftSidebar from '../components/LeftSidebar'
 import RightSidebar from '../components/RightSidebar'
 import { useGame } from '../hooks/useGame'
 import { formatMoves } from '../utils/functions'
+
+const StyledLink = styled(Link)`
+  &,
+  &:focus,
+  &:hover,
+  &:visited,
+  &:link,
+  &:active {
+    text-decoration: none;
+    color: unset;
+  }
+
+  > h1 {
+    font-size: 2.5em;
+  }
+`
 
 const Game = props => {
   const { loading, game } = useGame(props.match.params.id)
@@ -28,11 +45,14 @@ const Game = props => {
   return (
     <Layout.Container>
       <Layout.Top>
-        <Link to="/">Home</Link>
+        <StyledLink to="/">
+          <h1>WebChess</h1>
+        </StyledLink>
       </Layout.Top>
 
       <Layout.Left>
         <LeftSidebar
+          id={game.id}
           startTime={game.startTime}
           increment={game.increment}
           playerInfo={game.playerInfo}

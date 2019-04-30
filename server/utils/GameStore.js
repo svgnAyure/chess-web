@@ -4,9 +4,10 @@ const ChessGame = require('chess-engine')
 class GameStore {
   constructor() {
     this.games = {}
+    setInterval(this.removeUnplayedGames.bind(this), 30000)
   }
 
-  createGame({ startTime, increment, colour, userId } = {}) {
+  createGame({ startTime, increment, colour, userId }) {
     const game = new ChessGame()
     const id = alphanumeric(8)
     const side = colour === 'random' ? ['white', 'black'][~~(Math.random() * 2)] : colour
@@ -33,16 +34,21 @@ class GameStore {
 
   joinGame(gameId, userId) {
     const game = this.games[gameId]
+    if (!game) {
+      return null
+    }
 
     if (game.status === 'waitingForBlack') {
       game.blackId = userId
       game.status = 'ready'
+      game.createdAt = Date.now()
       return game
     }
 
     if (game.status === 'waitingForWhite') {
       game.whiteId = userId
       game.status = 'ready'
+      game.createdAt = Date.now()
       return game
     }
 
@@ -53,8 +59,27 @@ class GameStore {
     return this.games[gameId]
   }
 
+  getGames() {
+    return Object.values(this.games)
+  }
+
   deleteGame(gameId) {
     delete this.games[gameId]
+  }
+
+  removeUnplayedGames() {
+    const games = { ...this.games }
+    Object.values(games).forEach(g => {
+      if (g.status.includes('waitingFor') && Date.now() - g.createdAt > 120000) {
+        console.log('removing', g.id)
+        this.deleteGame(g.id)
+      }
+
+      if (g.status === 'ready' && Date.now() - g.createdAt > 120000) {
+        console.group('removing', g.id)
+        this.deleteGame(g.id)
+      }
+    })
   }
 }
 

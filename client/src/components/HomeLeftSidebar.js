@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import GameInfo from './GameInfo'
+import GeneralInfo from './GeneralInfo'
 import MyGamesList from './MyGamesList'
 
 const SidebarContainer = styled.div`
@@ -13,11 +13,9 @@ const SidebarContainer = styled.div`
 `
 
 const LeftSidebar = props => {
-  const { id, startTime, increment, playerInfo } = props
-
   return (
     <SidebarContainer>
-      <GameInfo id={id} startTime={startTime} increment={increment} playerInfo={playerInfo} />
+      <GeneralInfo />
       <MyGamesList />
     </SidebarContainer>
   )
