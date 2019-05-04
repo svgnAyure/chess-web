@@ -14,6 +14,7 @@ type Game {
 type GameStatus {
   isFinished: Boolean!
   statusText: String!
+  drawOffered: String
 }
 
 type PlayerInfo {
@@ -38,6 +39,9 @@ type Query {
 type Mutation {
   createGame(startTime: Int!, increment: Int!, colour: String!): String!
   joinGame(id: ID!): Boolean!
+  offerDraw(id: ID!): Boolean!
+  acceptDraw(id: ID!): Boolean!
+  resign(id: ID!): Boolean!
 }
 
 type Subscription {

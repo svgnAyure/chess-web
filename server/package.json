@@ -6,7 +6,7 @@
   "license": "MIT",
   "dependencies": {
     "alphanumeric-id": "^1.0.1",
-    "chess-engine": "https://github.com/svgnAyure/chess-engine",
+    "chess-engine": "https://github.com/svgnAyure/chess-engine.git",
     "express-session": "^1.15.6",
     "graphql": "^14.1.1",
     "graphql-subscriptions": "^1.0.0",

@@ -56,6 +56,7 @@ const Game = props => {
           startTime={game.startTime}
           increment={game.increment}
           playerInfo={game.playerInfo}
+          gameStatus={game.gameStatus}
         />
       </Layout.Left>
 

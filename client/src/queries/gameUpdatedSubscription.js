@@ -11,6 +11,7 @@ export default gql`
       gameStatus {
         isFinished
         statusText
+        drawOffered
       }
       legalMoves {
         from

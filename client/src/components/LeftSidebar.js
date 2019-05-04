@@ -13,11 +13,17 @@ const SidebarContainer = styled.div`
 `
 
 const LeftSidebar = props => {
-  const { id, startTime, increment, playerInfo } = props
+  const { id, startTime, increment, playerInfo, gameStatus } = props
 
   return (
     <SidebarContainer>
-      <GameInfo id={id} startTime={startTime} increment={increment} playerInfo={playerInfo} />
+      <GameInfo
+        id={id}
+        startTime={startTime}
+        increment={increment}
+        playerInfo={playerInfo}
+        gameStatus={gameStatus}
+      />
       <MyGamesList />
     </SidebarContainer>
   )

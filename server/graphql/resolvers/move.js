@@ -35,6 +35,7 @@ module.exports = {
         }
 
         game.status = halfMoves > 1 ? 'inProgress' : 'ready'
+        game.drawOffered = false
         game.time = {
           ...game.time,
           [prevMoveColour]: shouldCostTime ? newTimeLeft : oldTimeLeft,

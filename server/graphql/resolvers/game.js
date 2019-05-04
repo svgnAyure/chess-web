@@ -17,7 +17,11 @@ module.exports = {
         whiteTimeLeft: Math.max(white - (lastMoveBy === 'b' ? now - lastMoveTime : 0), 0),
         blackTimeLeft: Math.max(black - (lastMoveBy === 'w' ? now - lastMoveTime : 0), 0)
       }
-    }
+    },
+    gameStatus: game => ({
+      ...game.gameStatus,
+      drawOffered: game.drawOffered ? game.drawOffered : null
+    })
   },
 
   Query: {
@@ -54,6 +58,49 @@ module.exports = {
       } else {
         return false
       }
+    },
+
+    offerDraw: (_, { id }, { games, pubsub, userId }) => {
+      const game = games.getGame(id)
+      if (!game) {
+        return false
+      }
+
+      const ids = {
+        [game.whiteId]: 'w',
+        [game.blackId]: 'b'
+      }
+
+      const colour = ids[userId]
+      if (!colour) {
+        return false
+      }
+
+      game.drawOffered = colour
+      pubsub.publish('GAME_UPDATED', { gameUpdated: game })
+      return true
+    },
+
+    acceptDraw: (_, { id }, { games, pubsub, userId }) => {
+      const game = games.getGame(id)
+      if (!game) {
+        return false
+      }
+
+      const ids = {
+        [game.whiteId]: 'w',
+        [game.blackId]: 'b'
+      }
+
+      const colour = ids[userId]
+      if (!colour || colour === game.drawOffered) {
+        return false
+      }
+
+      game.drawOffered = false
+      game.playerDraw()
+      pubsub.publish('GAME_UPDATED', { gameUpdated: game })
+      return true
     }
   },
 

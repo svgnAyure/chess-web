@@ -16,6 +16,7 @@ class GameStore {
     game.whiteId = side === 'white' ? userId : null
     game.blackId = side === 'black' ? userId : null
     game.status = side === 'white' ? 'waitingForBlack' : 'waitingForWhite'
+    game.drawOffered = false
     game.createdAt = Date.now()
 
     game.time = {

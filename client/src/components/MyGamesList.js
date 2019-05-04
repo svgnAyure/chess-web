@@ -114,7 +114,7 @@ const MyGamesList = props => {
               <StyledLink key={g.id} to={`/${g.id}`}>
                 <GamesListItem selected={g.id === match.params.id}>
                   <ColourIndicator colour={g.playerInfo.myColour}>
-                    {g.playerInfo.myTurn ? '!' : ''}
+                    {['ready', 'inProgress'].includes(g.status) && g.playerInfo.myTurn ? '!' : ''}
                   </ColourIndicator>
                   <TimeControlIndicator>
                     {g.startTime}+{g.increment}

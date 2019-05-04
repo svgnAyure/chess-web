@@ -22,7 +22,9 @@ const GameInfo = props => {
       <div>
         Time control: {props.startTime}+{props.increment}
       </div>
-      {playing && <GameActionPane id={props.id} />}
+      {playing && (
+        <GameActionPane id={props.id} playerInfo={props.playerInfo} gameStatus={props.gameStatus} />
+      )}
     </GameInfoContainer>
   )
 }

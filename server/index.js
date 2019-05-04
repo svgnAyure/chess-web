@@ -28,7 +28,12 @@ server.start({
   port: 4000,
   cors: {
     credentials: true,
-    origin: ['http://localhost:3000', 'http://109.247.216.255', 'http://localhost']
+    origin: [
+      'http://localhost:3000',
+      'http://localhost',
+      'http://109.247.216.255',
+      'http://109.247.216.255:3000'
+    ]
   },
   endpoint: '/graphql',
   subscriptions: {
