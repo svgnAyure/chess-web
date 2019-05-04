@@ -274,7 +274,7 @@ bytes@3.0.0:
 
 "chess-engine@https://github.com/svgnAyure/chess-engine.git":
   version "1.0.0"
-  resolved "https://github.com/svgnAyure/chess-engine.git#15abc519bbdec7a77d19ae535f9344b78ca1ecdd"
+  resolved "https://github.com/svgnAyure/chess-engine.git#80646e16cc7859907459bd0a015c96c5468d651f"
 
 commander@^2.5.0:
   version "2.19.0"
