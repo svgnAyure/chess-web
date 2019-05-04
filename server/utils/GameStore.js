@@ -4,7 +4,7 @@ const ChessGame = require('chess-engine')
 class GameStore {
   constructor() {
     this.games = {}
-    setInterval(this.removeUnplayedGames.bind(this), 30000)
+    setInterval(this.removeExpiredGames.bind(this), 30000)
   }
 
   createGame({ startTime, increment, colour, userId }) {
@@ -68,16 +68,21 @@ class GameStore {
     delete this.games[gameId]
   }
 
-  removeUnplayedGames() {
+  removeExpiredGames() {
     const games = { ...this.games }
     Object.values(games).forEach(g => {
       if (g.status.includes('waitingFor') && Date.now() - g.createdAt > 120000) {
-        console.log('removing', g.id)
+        console.log(`removing ${g.id}`)
         this.deleteGame(g.id)
       }
 
       if (g.status === 'ready' && Date.now() - g.createdAt > 120000) {
-        console.group('removing', g.id)
+        console.group(`removing ${g.id}`)
+        this.deleteGame(g.id)
+      }
+
+      if (g.status === 'finished' && Date.now() - g.createdAt > 300000) {
+        console.log(`removing ${g.id}`)
         this.deleteGame(g.id)
       }
     })

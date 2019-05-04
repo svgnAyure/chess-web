@@ -62,7 +62,7 @@ module.exports = {
 
     offerDraw: (_, { id }, { games, pubsub, userId }) => {
       const game = games.getGame(id)
-      if (!game) {
+      if (!game || game.gameStatus.isFinished || game.status.includes('waitingFor')) {
         return false
       }
 
@@ -98,7 +98,31 @@ module.exports = {
       }
 
       game.drawOffered = false
+      game.status = 'finished'
       game.playerDraw()
+      pubsub.publish('GAME_UPDATED', { gameUpdated: game })
+      return true
+    },
+
+    resign: (_, { id }, { games, pubsub, userId }) => {
+      const game = games.getGame(id)
+      if (!game || game.gameStatus.isFinished || game.status.includes('waitingFor')) {
+        return false
+      }
+
+      const ids = {
+        [game.whiteId]: 'w',
+        [game.blackId]: 'b'
+      }
+
+      const colour = ids[userId]
+      if (!colour) {
+        return false
+      }
+
+      game.drawOffered = false
+      game.status = 'finished'
+      game.playerResign(colour)
       pubsub.publish('GAME_UPDATED', { gameUpdated: game })
       return true
     }

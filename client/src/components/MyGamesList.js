@@ -119,7 +119,7 @@ const MyGamesList = props => {
                   <TimeControlIndicator>
                     {g.startTime}+{g.increment}
                   </TimeControlIndicator>
-                  {g.gameStatus.isFinished ? null : <TimeLeft game={g} />}
+                  {g.gameStatus.isFinished ? 'Finished' : <TimeLeft game={g} />}
                 </GamesListItem>
               </StyledLink>
             ))}

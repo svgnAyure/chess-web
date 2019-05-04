@@ -4,6 +4,7 @@ import { useMutation } from 'react-apollo-hooks'
 
 import offerDrawMutation from '../queries/offerDrawMutation'
 import acceptDrawMutation from '../queries/acceptDrawMutation'
+import resignMutation from '../queries/resignMutation'
 
 const GameActionContainer = styled.div`
   display: grid;
@@ -13,7 +14,7 @@ const GameActionContainer = styled.div`
 
 const Button = styled.button`
   padding: 5px;
-  box-shadow: ${p => (p.outline ? '0px 0px 1px 1px blue' : '')};
+  box-shadow: ${p => (p.outline ? '0px 0px 3px 1px blue' : '')};
 
   img {
     height: 24px;
@@ -23,6 +24,7 @@ const Button = styled.button`
 const GameActionPane = props => {
   const offerDraw = useMutation(offerDrawMutation, { variables: { id: props.id } })
   const acceptDraw = useMutation(acceptDrawMutation, { variables: { id: props.id } })
+  const resign = useMutation(resignMutation, { variables: { id: props.id } })
 
   const myColour = props.playerInfo.myColour
   const drawOffered = props.gameStatus.drawOffered
@@ -36,7 +38,7 @@ const GameActionPane = props => {
   }
 
   const handleResign = () => {
-    console.log(`Resigned in ${props.id}`)
+    resign()
   }
 
   return (

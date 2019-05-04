@@ -9,7 +9,8 @@ const GameInfoContainer = styled.div`
   padding: 15px;
   display: grid;
   grid-template: 1fr 1fr 2fr / 1fr;
-  place-items: stretch;
+  place-items: center;
+  place-content: center;
 `
 
 const GameInfo = props => {
@@ -18,12 +19,20 @@ const GameInfo = props => {
 
   return (
     <GameInfoContainer>
-      <div>{playing ? `Playing as ${colour}` : 'Spectating game'}</div>
+      <div>
+        <b>{playing ? `Playing as ${colour}` : 'Spectating game'}</b>
+      </div>
       <div>
         Time control: {props.startTime}+{props.increment}
       </div>
-      {playing && (
+      {playing && !props.gameStatus.isFinished ? (
         <GameActionPane id={props.id} playerInfo={props.playerInfo} gameStatus={props.gameStatus} />
+      ) : (
+        <div style={{ textAlign: 'center' }}>
+          <b>Game over</b>
+          <br />
+          {props.gameStatus.statusText}
+        </div>
       )}
     </GameInfoContainer>
   )

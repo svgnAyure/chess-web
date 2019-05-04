@@ -31,10 +31,17 @@ module.exports = {
         }
 
         const onTimeout = () => {
-          console.log('hey')
+          game.playerTimeout(nextMoveColour[0])
+          game.status = 'finished'
+          pubsub.publish('GAME_UPDATED', { gameUpdated: game })
         }
 
-        game.status = halfMoves > 1 ? 'inProgress' : 'ready'
+        game.status = game.gameStatus.isFinished
+          ? 'finished'
+          : halfMoves > 1
+          ? 'inProgress'
+          : 'ready'
+
         game.drawOffered = false
         game.time = {
           ...game.time,

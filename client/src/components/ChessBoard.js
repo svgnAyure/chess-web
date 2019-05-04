@@ -88,7 +88,7 @@ const ChessBoard = props => {
   const handleMouseDown = e => {
     e.preventDefault()
 
-    if (props.waitingForPlayer || !props.playerInfo.myTurn) {
+    if (props.waitingForPlayer || !props.playerInfo.myTurn || props.gameStatus.isFinished) {
       return
     }
 
