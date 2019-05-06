@@ -1,3 +1,7 @@
+// React-hook som lagrer en referanse til trekkhistorikklisten.
+// Etter hvert trekk vil dette hooket sørge for at denne listen
+// alltid er scrollet ned til siste trekk.
+
 import { useEffect, useRef } from 'react'
 
 export const useScroll = fen => {

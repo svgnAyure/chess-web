@@ -1,3 +1,8 @@
+/**
+ * Konfigurasjon av Apollo-klienten.
+ */
+
+// Importsetninger
 import { ApolloClient } from 'apollo-client'
 import { split } from 'apollo-link'
 import { HttpLink } from 'apollo-link-http'
@@ -5,11 +10,13 @@ import { WebSocketLink } from 'apollo-link-ws'
 import { InMemoryCache } from 'apollo-cache-inmemory'
 import { getMainDefinition } from 'apollo-utilities'
 
+// HTTP-link for sending av spørringer via HTTP.
 const httpLink = new HttpLink({
   uri: `http://${process.env.REACT_APP_SERVER_URL}/graphql`,
   credentials: 'include'
 })
 
+// WebSocket-link for overføring av data i sanntid fra serveren.
 const wsLink = new WebSocketLink({
   uri: `ws://${process.env.REACT_APP_SERVER_URL}/subscriptions`,
   options: {
@@ -18,6 +25,7 @@ const wsLink = new WebSocketLink({
   }
 })
 
+// Skiller mellom HTTP og WebSocket basert på typen GraphQL-spørring.
 const splitLink = split(
   ({ query }) => {
     const { kind, operation } = getMainDefinition(query)
@@ -27,6 +35,7 @@ const splitLink = split(
   httpLink
 )
 
+// Lager en ApolloClient-instans, som kan brukes i komponentene til å hente data.
 const client = new ApolloClient({
   link: splitLink,
   cache: new InMemoryCache()

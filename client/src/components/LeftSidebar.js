@@ -1,3 +1,6 @@
+// React-komponent som representerer venstre sidemeny på
+// siden for individuelle sjakkpartier.
+
 import React from 'react'
 import styled from 'styled-components'
 

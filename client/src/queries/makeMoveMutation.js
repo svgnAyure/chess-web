@@ -1,3 +1,5 @@
+// GraphQL-mutasjon som lar spillere gjøre trekk i et gitt sjakkparti.
+
 import gql from 'graphql-tag'
 
 export default gql`

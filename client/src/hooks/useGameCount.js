@@ -1,3 +1,7 @@
+// React-hook som utfører spørringer og subscriptions og
+// tilgjengeliggjør oppdaterte data om antall aktive
+// sjakkpartier for bruk i applikasjonens komponenter.
+
 import { useQuery, useSubscription } from 'react-apollo-hooks'
 import getGameCountQuery from '../queries/getGameCountQuery'
 import gameCountUpdatedSubscription from '../queries/gameCountUpdatedSubscription'

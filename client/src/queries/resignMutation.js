@@ -1,3 +1,5 @@
+// GraphQL-mutasjon som lar spillere gi opp partier.
+
 import gql from 'graphql-tag'
 
 export default gql`

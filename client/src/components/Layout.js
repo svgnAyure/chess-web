@@ -1,3 +1,7 @@
+// React-komponenter som brukes som del av hovedlayouten i
+// applikasjonen. De individuelle komponentene kan importere
+// disse komponentene for å legge innholdet i ønsket posisjon.
+
 import styled from 'styled-components'
 
 export const Container = styled.div`

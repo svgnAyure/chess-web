@@ -1,3 +1,7 @@
+/**
+ * Inneholder globale stildefinisjoner (CSS).
+ */
+
 import { createGlobalStyle } from 'styled-components'
 
 const GlobalStyle = createGlobalStyle`

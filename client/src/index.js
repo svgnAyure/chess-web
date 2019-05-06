@@ -1,3 +1,10 @@
+/**
+ * Rotmodulen i React-applikasjonen.
+ * Importerer globale stiler, routes, og setter opp
+ * ApolloProvider slik at komponentene har tilgang til
+ * Apollo-klienten for utførelse av GraphQL-spørringer.
+ */
+
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { ApolloProvider } from 'react-apollo-hooks'

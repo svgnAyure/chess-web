@@ -1,3 +1,7 @@
+// React-hook som utfører spørringer og subscriptions og
+// tilgjengeliggjør oppdaterte data om gitte sjakkpartier
+// for bruk i applikasjonens komponenter.
+
 import { useQuery, useSubscription } from 'react-apollo-hooks'
 import getGameQuery from '../queries/getGameQuery'
 import gameUpdatedSubscription from '../queries/gameUpdatedSubscription'

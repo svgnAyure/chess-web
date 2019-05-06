@@ -1,3 +1,8 @@
+// React-komponent som representerer menyen til venstre i
+// GUIet på hovedsiden i applikasjonen. Den vil vise generell
+// informasjon om applikasjonen, samt listen over partier
+// som brukeren deltar i.
+
 import React from 'react'
 import styled from 'styled-components'
 

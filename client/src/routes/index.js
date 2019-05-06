@@ -1,3 +1,9 @@
+/**
+ * Hovedkomponent for applikasjonens ruter.
+ * Ser på websidens URL og bestemmer hvilke
+ * komponenter som skal vises basert på den.
+ */
+
 import React from 'react'
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
 

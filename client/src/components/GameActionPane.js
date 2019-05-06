@@ -1,3 +1,6 @@
+// React-komponent som representerer en knappemeny der brukeren
+// kan velge å tilby/godta remis, eller å gi opp partiet.
+
 import React from 'react'
 import styled from 'styled-components'
 import { useMutation } from 'react-apollo-hooks'

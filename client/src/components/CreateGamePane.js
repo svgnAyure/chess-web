@@ -1,3 +1,7 @@
+// React-komponent som representerer panelet som finnes på hovedsiden,
+// der brukere kan velge innstillinger for nye partier, og deretter velge
+// farge for å opprette partiet.
+
 import React, { useState } from 'react'
 import styled from 'styled-components'
 import { useMutation } from 'react-apollo-hooks'

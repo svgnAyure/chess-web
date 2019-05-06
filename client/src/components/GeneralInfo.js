@@ -1,3 +1,6 @@
+// React-komponent som representerer generell info om applikasjonen.
+// Den viser blant annet antall aktive partier til enhver tid.
+
 import React from 'react'
 import styled from 'styled-components'
 

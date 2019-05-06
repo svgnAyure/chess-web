@@ -1,3 +1,7 @@
+// React-komponent som representerer listen over partier
+// som brukeren deltar i til enhver tid. Denne vil vises
+// på venstre side av GUIet, både på partisiden og hovedsiden.
+
 import React from 'react'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'

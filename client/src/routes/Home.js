@@ -1,3 +1,10 @@
+/**
+ * Hovedkomponent for websidens rot ('/').
+ * Denne komponenten vil vise applikasjonens hovedside,
+ * der brukere kan opprette sjakkpartier og samtidig se
+ * åpne partier, samt partier de deltar i til enhver tid.
+ */
+
 import React from 'react'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'

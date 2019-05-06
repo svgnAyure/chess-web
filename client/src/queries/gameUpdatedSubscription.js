@@ -1,3 +1,5 @@
+// GraphQL-subscription som ber om oppdatering når et parti oppdateres.
+
 import gql from 'graphql-tag'
 
 export default gql`

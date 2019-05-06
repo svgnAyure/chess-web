@@ -13,6 +13,7 @@ services:
     build: ./server
     environment:
       NODE_ENV: production
+      SERVER_URL: http://localhost:3000
     networks:
       - webnet
 

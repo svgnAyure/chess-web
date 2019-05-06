@@ -1,3 +1,8 @@
+// React-hook som sørger for å starte og stoppe klokkene for hver
+// spiller i sjakkpartiene. Basert på en rekke kriterier vil hooket
+// finne ut hvilken spiller som skal ha en aktiv klokke som teller
+// ned, og når den eventuelt skal stoppes.
+
 import { useState, useEffect } from 'react'
 
 export const useTime = ({ whiteTimeLeft, blackTimeLeft, isFinished, toMove, fullMoves }) => {

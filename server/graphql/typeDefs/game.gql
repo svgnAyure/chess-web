@@ -1,3 +1,6 @@
+# Typedefinisjoner for GraphQL-systemet.
+# Definerer attributter og operasjoner relatert til sjakkpartier.
+
 type Game {
   id: ID!
   fen: String!

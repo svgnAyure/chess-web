@@ -1,3 +1,5 @@
+// GraphQL-spørring som henter data om alle partier en bruker deltar i.
+
 import gql from 'graphql-tag'
 
 export default gql`

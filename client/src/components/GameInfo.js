@@ -1,3 +1,8 @@
+// React-komponent som representerer informasjon om et bestemt parti.
+// Vises på partisiden, og gir informasjon om tidskontroller og hvilken farge
+// brukeren spiller med. Gir også brukeren mulighet til å tilby remis og til å gi opp.
+// Dersom partiet er over, viser denne komponenten også hvordan partiet endte.
+
 import React from 'react'
 import styled from 'styled-components'
 

@@ -1,39 +1,41 @@
+// Hovedkomponenten for webserveren.
+
+// Importsetninger
 const { GraphQLServer } = require('graphql-yoga')
 const { PubSub } = require('graphql-subscriptions')
 
 const { typeDefs, resolvers } = require('./graphql/schema')
-const { middlewares } = require('./graphql/middleware')
 const { sessionParser, initSession, getSessionFromWebSocket } = require('./session')
 const ChessStore = require('./utils/GameStore')
 
+// Oppretter instans av klassen for lagring av partier.
 const games = new ChessStore()
 const pubsub = new PubSub()
 
+// Tilgjengeliggjør session-data, partilisten og modul for
+// sending av sanntidsdata for resolverne i GraphQL-oppsettet.
 const context = ({ request, connection }) => ({
   userId: request ? request.session.userId : connection.context.session.userId,
   games,
   pubsub
 })
 
+// Oppretter en GraphQL-server og konfigurerer denne.
 const server = new GraphQLServer({
   typeDefs,
   resolvers,
-  context,
-  middlewares
+  context
 })
 
+// Legger inn sessionrelatert middleware.
 server.express.use(sessionParser, initSession)
 
+// Konfigurerer og starter serveren.
 server.start({
   port: 4000,
   cors: {
     credentials: true,
-    origin: [
-      'http://localhost:3000',
-      'http://localhost',
-      'http://109.247.216.255',
-      'http://109.247.216.255:3000'
-    ]
+    origin: [process.env.SERVER_URL || 'http://localhost:3000']
   },
   endpoint: '/graphql',
   subscriptions: {

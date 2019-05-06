@@ -1,3 +1,6 @@
+# Typedefinisjoner for GraphQL-systemet.
+# Definerer attributter og operasjoner relatert til sjakktrekk.
+
 type Move {
   from: String!
   to: String!

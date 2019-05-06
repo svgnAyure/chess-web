@@ -1,3 +1,8 @@
+// Modul som bestemmer hvilken type brikke som skal opprettes
+// basert på tegn fra FEN-strengen som tilhører partiet.
+// De ulike brikkekomponentene vil ha ulike bakgrunnsbilder
+// som representerer den typen brikke som feltet inneholder.
+
 import styled from 'styled-components'
 
 const Piece = styled.div`

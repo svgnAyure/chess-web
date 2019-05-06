@@ -1,3 +1,10 @@
+/**
+ * Hovedkomponent for individuelle sjakkpartier.
+ * Denne komponenten vil vise individuelle partier basert
+ * på ID i URL, og vil vise sjakkbrettet samt tid for begge
+ * spillere og en liste med trekk hittil i partiet.
+ */
+
 import React from 'react'
 import styled from 'styled-components'
 import { Link, Redirect } from 'react-router-dom'
@@ -37,6 +44,8 @@ const Game = props => {
     return <Redirect to="/" />
   }
 
+  // Sorterer de lovlige trekkene i tre grupper slik at de kan
+  // representeres på sjakkbrettet på ulike måter basert på dem.
   const { moves, captures, promotions } = formatMoves(game.legalMoves)
   const waitingForWhite = game.status === 'waitingForWhite'
   const waitingForBlack = game.status === 'waitingForBlack'

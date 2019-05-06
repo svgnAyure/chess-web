@@ -1,3 +1,7 @@
+// React-komponent som representerer menyen til høyre i GUIet
+// når man er inne på siden til et av partiene. Denne vil inneholde
+// elementer som trekkhistorikklisten og klokker for begge spillere.
+
 import React from 'react'
 import styled from 'styled-components'
 

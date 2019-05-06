@@ -1,3 +1,9 @@
+// React-komponent som representerer et panel med ulike funksjoner.
+// Den vil vises på siden for individuelle partier, før selve partiet
+// starter. Den gir den som startet partiet en link som han/hun kan
+// dele med andre slik at de kan delta, mens andre besøkende til siden
+// vil få en knapp der de kan velge å delta i partiet.
+
 import React, { useRef } from 'react'
 import styled from 'styled-components'
 import { useMutation } from 'react-apollo-hooks'

@@ -1,3 +1,8 @@
+// Modul som bestemmer hvilken type felt som skal opprettes
+// basert på ulike typer trekk. For eksempel skal trekk til
+// ledige felter markeres annerledes enn trekk til opptatte
+// felter, og denne filen inneholder disse stildefinisjonene.
+
 import styled from 'styled-components'
 
 const Square = styled.div`

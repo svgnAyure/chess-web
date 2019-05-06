@@ -1,3 +1,7 @@
+// React-komponent som viser åpne partier som brukere kan
+// klikke på for å delta i. Den vil vises på hovedsiden, på
+// høyre side i GUIet.
+
 import React from 'react'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'

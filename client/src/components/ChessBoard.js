@@ -1,3 +1,8 @@
+// React-komponent som representerer selve sjakkbrettet.
+// Her vil alle feltene og alle brikkene bli vist, og komponenten
+// vil muliggjøre flytting av brikker både ved kun å klikke, og ved
+// å klikke og dra brikkene fra felt til felt.
+
 import React, { useState } from 'react'
 import styled from 'styled-components'
 import { useMutation } from 'react-apollo-hooks'
@@ -129,6 +134,9 @@ const ChessBoard = props => {
     }
   }
 
+  // Funksjon som returnerer individuelle felter basert på
+  // hvilken type trekk feltet er involvert i i øyeblikket.
+  // Tegner også brikker dersom det befinner seg brikker der.
   const renderSquare = (x, y, c) => {
     const id = getSquareName(x, 7 - y)
     const Piece = getPiece(c)
@@ -153,6 +161,9 @@ const ChessBoard = props => {
     )
   }
 
+  // Funksjon som returnerer feltene på brettet.
+  // For svart vil rekkefølgen reverseres slik at begge
+  // spillerne alltid ser brettet fra sin synsvinkel.
   const renderSquares = () => {
     const { myColour } = props.playerInfo
     const chars = props.fen.split(' ')[0].split('/')
