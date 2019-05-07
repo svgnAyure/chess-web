@@ -34,7 +34,7 @@ const GameInfo = props => {
         <GameActionPane id={props.id} playerInfo={props.playerInfo} gameStatus={props.gameStatus} />
       ) : (
         <div style={{ textAlign: 'center' }}>
-          <b>Game over</b>
+          <b>{props.gameStatus.isFinished && 'Game over'}</b>
           <br />
           {props.gameStatus.statusText}
         </div>

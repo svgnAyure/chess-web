@@ -8,6 +8,8 @@ const { typeDefs, resolvers } = require('./graphql/schema')
 const { sessionParser, initSession, getSessionFromWebSocket } = require('./session')
 const ChessStore = require('./utils/GameStore')
 
+const SERVER_URL = process.env.SERVER_URL || 'localhost:3000'
+
 // Oppretter instans av klassen for lagring av partier.
 const games = new ChessStore()
 const pubsub = new PubSub()
@@ -35,7 +37,7 @@ server.start({
   port: 4000,
   cors: {
     credentials: true,
-    origin: [process.env.SERVER_URL || 'http://localhost:3000']
+    origin: [`http://${SERVER_URL}`]
   },
   endpoint: '/graphql',
   subscriptions: {
