@@ -26,12 +26,19 @@ const initSession = (req, res, next) => {
 
 // Funksjon som henter HTTP-data fra forespørselen som førte til
 // oppkobling av WebSocket-tilkobling og henter session cookie fra denne.
-const getSessionFromWebSocket = (connectionParams, webSocket) =>
-  new Promise(resolve =>
-    sessionParser(webSocket.upgradeReq, {}, () =>
-      resolve({ session: webSocket.upgradeReq.session })
-    )
-  )
+const getSessionFromWebSocket = async (connectionParams, webSocket) =>
+  await new Promise((resolve, reject) => {
+    sessionParser(webSocket.upgradeReq, {}, () => {
+      const session = webSocket.upgradeReq.session
+      if (session.userId) {
+        resolve({ session })
+      } else {
+        reject('no userId')
+      }
+    })
+  }).catch(e => {
+    throw new Error(e)
+  })
 
 module.exports = {
   sessionParser,
